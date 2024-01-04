@@ -81,5 +81,4 @@ def location(update, context):
     address_str = get_address_from_coords(coords)
     #вовщращаем результат пользователю в боте
     update.message.reply_text(address_str)'''
-
-
+(
