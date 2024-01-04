@@ -3,7 +3,7 @@ import datetime
 import telebot;
 # API бота в ТГ
 bot = telebot.TeleBot('6853640241:AAFJ9ouD8jf44dviH6TbZRQwo4LA7szyy5o'); 
-
+bot.polling(none_stop=True, interval=5)
 #получение города из переменной cords (Координаты или название)
 def get_address_from_coords(input_coords):
     PARAMS = {
@@ -61,14 +61,15 @@ url = 'https://api.weather.yandex.ru/v2/forecast'
 
 @bot.message_handler(content_types=['text'])
 def text(update, context):
+    print(text.text)
     #получаем текст от пользователя
     coords = update.message.text
     #отправляем текст в нашу функцио получения адреса из координат
     address_str = get_address_from_coords(coords)
     #вовщращаем результат пользователю в боте
-    update.message.reply_text(address_str)
+    bot.send_message(text.from_user.id, (address_str))
 
-@bot.message_handler(content_types=['location'])
+'''@bot.message_handler(content_types=['location'])
 def location(update, context):
     #получаем обьект сообщения (локации)
     message = update.message
@@ -79,7 +80,6 @@ def location(update, context):
     #отправляем координаты в нашу функцию получения адреса
     address_str = get_address_from_coords(coords)
     #вовщращаем результат пользователю в боте
-    update.message.reply_text(address_str)
+    update.message.reply_text(address_str)'''
 
 
-bot.polling(none_stop=True, interval=5)
