@@ -30,9 +30,10 @@ url = 'https://api.weather.yandex.ru/v2/forecast'
 
 @bot.message_handler(content_types=['text'])
 def get_text_messages(message):
-    
-    print(message.text)
-    if message.text == "/command1":
+    #print(message.text)
+    if message.text == "/start":
+        bot.send_message(message.from_user.id, f'Приветсвую в нашем маленьком боте. Воспользуйся меню чтобы увидеть команды.')
+    elif message.text == "/command1":
         today = datetime.datetime.today()
         now = today.strftime('%d.%m.%Y') # дата в формате Д.М.Г
         print(now)
@@ -41,28 +42,28 @@ def get_text_messages(message):
         # Преобразуем ответ в JSON формат 
             data = response.json() 
             # Выводим данные о текущей погоде 
-            bot.send_message(message.from_user.id, f'Температура воздуха: {data["fact"]["temp"]} °C')
-            bot.send_message(message.from_user.id, f'Ощущается как: {data["fact"]["feels_like"]} °C') 
-            bot.send_message(message.from_user.id, f'Погодное описание: {data["fact"]["condition"]}') 
+            bot.send_message(message.from_user.id, f'Температура воздуха: {data["fact"]["temp"]} °C\nОщущается как: {data["fact"]["feels_like"]} °C\nПогодное описание: {data["fact"]["condition"]}') 
             #Считаем суточные осадки
             prec_total = 0
             today_prec_morning = data["forecasts"]["date" == now]["parts"]["morning"]["prec_mm"]
-            print(today_prec_morning)
+            #print(today_prec_morning)
             today_prec_day = data["forecasts"]["date" == now]["parts"]["day"]["prec_mm"]
-            print(today_prec_day)
+            #print(today_prec_day)
             today_prec_night = data["forecasts"]["date" == now]["parts"]["night"]["prec_mm"]
-            print(today_prec_night)
+            #print(today_prec_night)
             prec_total = today_prec_morning + today_prec_day + today_prec_night
-            print(prec_total)
+            #print(prec_total)
             bot.send_message (message.from_user.id, f'Ожидаемые осадки сегодня: ' + str(prec_total) + 'mm')
-        if  prec_total == 0:
-            bot.send_message(message.from_user.id, 'Сегодня можно и на мойку заехать')
-        else:
-            bot.send_message(message.from_user.id, 'Ну помытся конечно можно, но ты дороги видел?')
-        bot.send_message(message.from_user.id, 'Данные получены из сервиса Яндекс.Погода')
-    else: 
-        # Выводим код ошибки 
-        print(f'Ошибка: {response.status_code}')
+            if  prec_total == 0:
+                bot.send_message(message.from_user.id, 'Сегодня можно и на мойку заехать')
+            else:
+                bot.send_message(message.from_user.id, 'Ну помытся конечно можно, но ты дороги видел?')
+            bot.send_message(message.from_user.id, 'Данные получены из сервиса Яндекс.Погода')
+        else: 
+            # Выводим код ошибки 
+            print(f'Ошибка: {response.status_code}')
+    else:
+        bot.send_message(message.from_user.id, 'Ой, я тебя не понял, воспользуйся меню пожалуйста')
 
 bot.polling(none_stop=True, interval=0)
 
