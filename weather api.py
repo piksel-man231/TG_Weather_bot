@@ -57,13 +57,8 @@ def get_text_messages(message):
             if  prec_total == 0:
  # Выводим данные о текущей погоде 
                 bot.send_message(message.from_user.id, f'Температура воздуха: {data["fact"]["temp"]} °C\nОщущается как: {data["fact"]["feels_like"]} °C\nПогодное описание: {data["fact"]["condition"]}\nОжидаемые осадки сегодня: ' + str(prec_total) + 'mm\nСегодня можно и на мойку заехать') 
-                #bot.send_message(message.from_user.id, f'Ожидаемые осадки сегодня: ' + str(prec_total) + 'mm')
-                #bot.send_message(message.from_user.id, 'Сегодня можно и на мойку заехать')
             else:
                 bot.send_message(message.from_user.id, f'Температура воздуха: {data["fact"]["temp"]} °C\nОщущается как: {data["fact"]["feels_like"]} °C\nПогодное описание: {data["fact"]["condition"]}\nОжидаемые осадки сегодня: ' + str(prec_total) + 'mm\nНу помытся конечно можно, но ты дороги видел? ') 
-                #bot.send_message(message.from_user.id, f'Ожидаемые осадки сегодня: ' + str(prec_total) + 'mm')
-                #bot.send_message(message.from_user.id, 'Ну помытся конечно можно, но ты дороги видел?')
-            bot.send_message(message.from_user.id, 'Данные получены из сервиса Яндекс.Погода')
         else: 
             # Выводим код ошибки 
             print(f'Ошибка: {response.status_code}')
